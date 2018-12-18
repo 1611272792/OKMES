@@ -1,0 +1,139 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>登录</title>
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <style>
+        #main {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            /*background-image: url('../../Images/1---登陆界面.jpg');*/
+            background: url('../../Images/1---登陆界面.jpg') no-repeat center;
+            background-size: 100% 99.9%;
+        }
+
+        #div1 {
+            margin-top: 105px;
+            border: 15px solid rgba(255, 255, 255, 0.2);
+            background: white;
+            background-clip: padding-box;
+            text-shadow: 0 0 black;
+            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div class="container">
+            <div class="info" style="margin-left:-70px;margin-top:160px;">
+                <img src="~/Images/牛Logo.png" width:"90"; height="90" style="float:left;margin-top:-10px;" />
+                <h1 style="width:440px;margin-top:150px;color:#0093dd;font-weight:400;">OKMES订单查询系统</h1>
+                <h4 style="text-align:center;width:430px; margin-top:-14px;color:#0093dd">OKMES Order Inquiry System</h4>
+                @*<span>OKMES Order<i class="fa fa-heart"></i><a href="#"> Inquiry System</a></span>*@
+            </div>
+        </div>
+        <div class="form" id="div1">
+            @*<div class="thumbnail">
+                    <img src="~/Images/牛Logo.png" />
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/hat.svg" />
+                </div>*@
+            <form class="register-form" action="" target="nm_iframe">
+                <input type="text" placeholder="客户编号" id="userName" />
+                <input type="password" placeholder="原密码" id="oldPwd" />
+                <input type="text" placeholder="新密码" id="newPwd" />
+                <button onclick="UpdPwd()">修改</button>
+                <p class="message">Already login? <a href="#">登录</a></p>
+            </form>
+            <form class="login-form" action="" target="nm_iframe">
+                <input type="text" placeholder="客户编号" id="userNo" />
+                <input type="password" placeholder="密码" id="pwd" />
+                <button onclick="CheckUser()">登录</button>
+                <p class="message">Change password? <a href="#">修改密码</a></p>
+            </form>
+            <iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe>
+        </div>
+    </div>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/index.js"></script>
+
+    <script type="text/javascript">
+
+        function post(URL, PARAMS) {
+            var temp = document.createElement("form");
+            temp.action = URL;
+            temp.method = "post";
+            temp.style.display = "none";
+            for (var x in PARAMS) {
+                var opt = document.createElement("textarea");
+                opt.name = x;
+                opt.value = PARAMS[x];
+                // alert(opt.name)
+                temp.appendChild(opt);
+            }
+            document.body.appendChild(temp);
+            temp.submit();
+            return temp;
+        }
+
+        //登录验证
+        function CheckUser() {
+            var userNo = $("#userNo").val();
+            var pwd = $("#pwd").val();
+            $.ajax({
+                type: "Get",
+                url: "/Login/CheckUser",
+                dataType: 'json',
+                data: { userName: userNo, pwd: pwd },
+                success: function (data) {
+                    if (data.document.ReturnValue == "1") {
+                        post('/Main/Index', {
+                            RowNo: data.document.Data.Row.RowNo,
+                            CustomerNo: data.document.Data.Row.CustomerNo,
+                            CustomerName: data.document.Data.Row.CustomerName,
+                            EmployeeName: data.document.Data.Row.EmployeeName,
+                            EmployeeMobile: data.document.Data.Row.EmployeeMobile
+                        });
+                        //window.location.href = '/Main/Index?userName=';
+                    } else {
+                        alert(data.document.ReturnMessage);
+                    }
+                }
+            });
+        }
+
+        //修改密码
+        function UpdPwd() {
+            var userName = $("#userName").val();
+            var oldPwd = $("#oldPwd").val();
+            var newPwd = $("#newPwd").val();
+            $.ajax({
+                type: "Get",
+                url: "/Login/UpdUser",
+                dataType: 'json',
+                data: { userName: userName, oldPwd: oldPwd, newPwd: newPwd },
+                success: function (data) {
+                    if (data.document.ReturnValue == "1") {
+                        alert(data.document.ReturnMessage);
+                        location.reload();
+                    } else {
+                        alert(data.document.ReturnMessage);
+                    }
+                }
+            });
+        }
+
+    </script>
+</body>
+
+</html>

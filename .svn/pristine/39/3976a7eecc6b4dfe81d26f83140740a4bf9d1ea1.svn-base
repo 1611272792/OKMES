@@ -1,0 +1,58 @@
+﻿@using System.Collections;
+@using System.Collections.Generic;
+ @if (ViewBag.list2 != null)
+ {
+     List<Hashtable> list2 = ViewBag.list2;
+    <h6>
+            订单号：@list2[0]["SoCode"] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            订单日期：@list2[0]["SoStartDate"]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            订单状态：@list2[0]["SoStatus"]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            预计出货日期：@list2[0]["SoFinishDate"]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            物流单号：@list2[0]["ShipmentEMNo"]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</h6>
+ }
+    <table class="table table-bordered table-striped table-hover text-center" style="width:100%">
+        <tr>
+            <th rowspan="2">生产单号</th>
+            <th rowspan="2">产品名称</th>
+            <th rowspan="2">总数量</th>
+            <th colspan="8">生产流程实时进度</th>
+            <th rowspan="2">生产单状态</th>
+            <th rowspan="2">物料状态</th>
+            <th rowspan="2">资料下载</th>
+        </tr>
+        <tr>
+            <th>焊接</th>
+            <th>边框</th>
+            <th>定位</th>
+            <th>接线</th>
+            <th>程序</th>
+            <th>测试</th>
+            <th>软件</th>
+            <th>包装</th>
+        </tr>
+        @if (ViewBag.hs != null)
+        {
+            List<Hashtable> list = ViewBag.hs;
+            for (int i = 0; i < list.Count; i++)
+            {
+                <tr>
+                    <td>@list[i]["SoDetailCode"]</td>
+                    <td>@list[i]["ItemName"]</td>
+                    <td>@list[i]["SoDetailQty"]</td>
+                    <td>@list[i]["HJQty"]</td>
+                    <td>@list[i]["BKQty"]</td>
+                    <td>@list[i]["DWQty"]</td>
+                    <td>@list[i]["JXQty"]</td>
+                    <td>@list[i]["CXStatus"]</td>
+                    <td>@list[i]["CSQty"]</td>
+                    <td>@list[i]["SoftStatus"]</td>
+                    <td>@list[i]["BZQty"]</td>
+                    <td>@list[i]["MoStatus"]</td>
+                    <td><a  data-toggle="modal" data-target="#myModal" style="text-decoration:none; cursor:pointer;" onclick="mnInfo('@list[i]["SoDetailCode"]')">@list[i]["MaterialStatus"]</a></td>
+                    <td>@list[i]["FileStatus"]</td>
+                </tr>
+            }
+        }
+    </table>
+ 

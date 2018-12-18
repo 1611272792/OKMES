@@ -1,0 +1,49 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+   
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap-table.js"></script>
+    <link href="~/Content/bootstrap-table.css" rel="stylesheet" />
+</head>
+<body>
+    <div> 
+        <table id="table" data-pagination="true" data-side-pagination="client" data-page-size="10"  >
+            @*<tr><td>1</td><td>1</td><td>2</td></tr>*@
+        </table>
+    </div>
+    <script>
+        $('#table').bootstrapTable({
+            columns: [{
+                field: 'OrderNo',
+                title: '订单号'
+            }, {
+                field: 'OrderDate',
+                title: '下单日期'
+            }, {
+                field: 'OrderState',
+                title: '订单状态'
+            }],
+            data: [{
+                OrderNo: 1,
+                OrderDate: 'Item 1',
+                OrderState: '$1'
+            }, {
+                OrderNo: 2,
+                OrderDate: 'Item 2',
+                OrderState: '$21'
+            }]
+        });
+
+    </script>
+</body>
+</html>

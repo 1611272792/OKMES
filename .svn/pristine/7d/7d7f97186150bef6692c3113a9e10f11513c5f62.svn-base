@@ -1,0 +1,103 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace SunpnMesWeb.Models
+{
+    public class OrderTitle {
+    public class Row
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public string @RowNo { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string @SoStartDate { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string @SoFinishDate { get; set; }
+        /// <summary>
+        /// 已出货
+        /// </summary>
+        public string @SoStatus { get; set; }
+        /// <summary>
+        /// 潍坊新港电子有限公司
+        /// </summary>
+        public string @CustomerName { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string @TelNo { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string @District { get; set; }
+        /// <summary>
+        /// 企业淘宝店铺
+        /// </summary>
+        public string @Source { get; set; }
+        /// <summary>
+        /// 优速快递：518 734 392 254
+        /// </summary>
+        public string @ShipmentEM { get; set; }
+    }
+
+    public class So
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public Row Row { get; set; }
+    }
+
+    public class Document
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public string SoCount { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ReturnValue { get; set; }
+        /// <summary>
+        /// 获取订单信息成功，共获取到[1]个订单信息！
+        /// </summary>
+        public string ReturnMessage { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public So So { get; set; }
+    }
+
+    public class Root
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public Document document { get; set; }
+    }
+    }
+    //public class OrderTitle
+    //{
+    //    public string SoCount { get; set; }
+    //    public string ReturnValue { get; set; }
+    //    public string ReturnMessage { get; set; }
+    //    public class So {
+    //        public string RowNo { get; set; }
+    //        public string SoStartDate { get; set; }
+    //        public string SoFinishDate { get; set; }
+    //        public string SoStatus { get; set; }
+    //        public string CustomerName { get; set; }
+    //        public string TelNo { get; set; }
+    //        public string District { get; set; }
+    //        public string Source { get; set; }
+    //        public string ShipmentEM { get; set; }
+    //    }
+
+    //}
+}

@@ -1,0 +1,54 @@
+﻿using SunpnMesWeb.Common;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Services;
+using System.Xml;
+
+namespace SunpnMesWeb.Controllers
+{
+    public class MainController : Controller
+    { 
+        // GET: Main
+        public ActionResult Index()
+        {
+           
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SelectOrder(string orderID) {
+            ServiceReference1.MesWebSoapClient s = new ServiceReference1.MesWebSoapClient();
+            string ss = s.Call("80", "<document><SoCode>"+ orderID + "</SoCode ></document>", "");//20181007005
+            var doc = new XmlDocument();
+            doc.LoadXml(ss);
+
+            var rowNoteList = doc.SelectNodes("/document");
+
+            if (rowNoteList != null)
+            {
+                Hashtable hs = new Hashtable();
+                foreach (XmlNode rowNode in rowNoteList)
+                {
+                    var fieldNodeList = rowNode.ChildNodes;
+                    foreach (XmlNode courseNode in fieldNodeList)
+                    {
+                        if (courseNode.Attributes != null)
+                        {
+                            hs.Add(courseNode.Name, courseNode.InnerXml);
+                        }
+                    }
+                }
+
+            }
+
+           
+            return PartialView("_SelectOrder");
+        }
+    }
+}

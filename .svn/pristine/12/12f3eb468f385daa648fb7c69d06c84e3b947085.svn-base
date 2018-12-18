@@ -1,0 +1,673 @@
+﻿@using System.Data;
+@using SunpnMesWeb.Models;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+@Styles.Render("~/Content/css")
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>OKMES订单查询系统</title>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+
+    <script src="~/Scripts/bootstrap-table.js"></script>
+    <link href="~/Content/bootstrap-table.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap-table-zh-CN.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <link rel="icon" href="~/Images/牛Logo.png" type="image/x-icon" />
+    <link href="~/Content/swiper.css" rel="stylesheet" />
+    <style>
+        @@media (max-width: 1900px) {
+            body {
+                width: 1900px;
+            }
+        }
+
+        @@media (max-width: 1680px) {
+            body {
+                width: 1660px;
+            }
+        }
+
+        @@media (max-width: 1600px) {
+            body {
+                width: 1580px;
+            }
+        }
+
+        @@media (max-width: 1440px) {
+            body {
+                width: 1420px;
+            }
+        }
+
+
+        @@media (max-width: 1400px) {
+            body {
+                width: 1349px;
+            }
+        }
+
+        @@media (max-width: 1360px) {
+            body {
+                width: 1340px;
+            }
+        }
+
+        /*顶部div样式*/
+        #top {
+            /*border: 2px solid black;*/
+            width: 100%;
+            height: 310px;
+            padding-top: 15px;
+            padding-left: 15px;
+            padding-right: 15px;
+            position: relative;
+        }
+
+        /*顶部左边客户和客服div信息*/
+        #top_left {
+            float: left;
+            width: 21%;
+            height: 285px;
+            /*border: 1px solid green;*/
+            /*background-color:#B0E4ff !important;*/
+        }
+
+        #ewm {
+            width: 99%;
+            border: 5px solid #fff;
+            height: 120px;
+            margin-left: 0;
+            margin-right: 0;
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            margin-bottom: 10px;
+            -webkit-box-align: center;
+            -moz-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+            /*border-bottom:2px solid white;*/
+        }
+
+        /*客户和客服*/
+        #customer, #service {
+            /*margin-left: 50px;*/
+            /*margin-top: 5px;*/
+            height: 160px;
+            /*border-top:2px solid white;*/
+            width: 99%;
+            /*padding-left:50px;*/
+            /*border:5px solid white;*/
+            border-radius: 5px;
+            margin-top: 0px;
+        }
+
+        /*顶部中间通知信息栏样式*/
+        #top_center {
+            float: left;
+            width: 78%;
+            height: 285px;
+            /*border: 1px solid green;*/
+            margin-left: 10px;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            /*background: url('../../Images/2--系统首页11-05修改1.png') no-repeat center;*/
+            background: url('../../Images/广告.png') no-repeat center;
+            background-size: 100% 99.9%;
+        }
+
+        /*顶部右侧二维码样式*/
+        /*#top_right {
+            float: left;
+            width: 23%;
+            height: 145px;
+            border: 1px solid green;
+        }*/
+
+        /*中间显示数据的div*/
+        #content {
+            /*border: 1px solid black;*/
+            width: 100%;
+            padding-top: 15px;
+            padding-left: 15px;
+            padding-right: 15px;
+            min-height: 900px;
+        }
+
+        /*中部左侧订单信息列表div样式*/
+        #left {
+            border: 1px solid #14c7ec;
+            width: 21%;
+            min-height: 850px;
+            float: left;
+            margin-right: 10px;
+        }
+
+
+        /*中部生产单列表div样式*/
+        #center {
+            border: 1px solid #14c7ec;
+            width: 78%;
+            min-height: 850px;
+            float: left;
+        }
+
+
+            /*订单和生产单列表标题的样式*/
+            #left th, #center th, .table th {
+                text-align: center;
+                vertical-align: middle;
+            }
+
+        /*搜索框样式*/
+        .fixed-table-container, .fixed-table-toolbar {
+            margin-top: 16px;
+            border: none;
+        }
+
+        .form-control {
+            margin: 0px auto;
+        }
+
+        .fixed-table-toolbar .bs-bars,
+        .fixed-table-toolbar .search,
+        .fixed-table-toolbar .columns {
+            float: none !important;
+        }
+
+        /*表格样式*/
+        .table td,
+        .table th {
+            /*background-color: #e4f2fd !important;*/
+        }
+
+        .table-bordered > thead > tr > th,
+        .table-bordered > tbody > tr > th,
+        .table-bordered > tfoot > tr > th,
+        .table-bordered > thead > tr > td,
+        .table-bordered > tbody > tr > td,
+        .table-bordered > tfoot > tr > td {
+            border: 1px solid #14c7ec;
+        }
+
+        th {
+            background-color: #B0E4ff !important;
+        }
+
+        td {
+            background-color: #E4F2FD;
+        }
+
+        /*分页控件样式*/
+        .fixed-table-pagination {
+            text-align: center;
+        }
+
+        .pagination {
+            float: none !important;
+        }
+
+        .pagination-detail {
+            float: none !important;
+        }
+
+        .ewmimgbox {
+            /*border: 1px solid purple;*/
+            height: 110px;
+            width: 50%;
+            vertical-align: middle;
+            float: left;
+            /*margin-left:-10px;*/
+            margin-top: 5px;
+            text-align: center;
+        }
+
+        .ewmimg {
+            /*margin-left: 30px;
+            margin-right: 10px;*/
+            /*border: 1px solid purple;*/
+            height: 90px;
+            width: 90px;
+            display: block;
+        }
+
+        #customer tr td {
+            border: 3px solid white;
+            /*background-color: #B0E4ff !important;*/
+            text-align: center;
+        }
+
+        .lefttd {
+            background-color: #B0E4ff;
+        }
+
+        .form-control {
+            width: 80% !important;
+        }
+
+        .box {
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-align: center;
+            -moz-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .box div {
+                display: flex;
+            }
+
+            .box p {
+                writing-mode: vertical-lr;
+                margin-left: 3px;
+            }
+
+
+        .swiper-container {
+            width: 78%;
+            height: 285px;
+        }
+
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+            /* Center slide text vertically */
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body style="background-color:#E4F2FD;">
+    <div style="width:100%;min-height:100%;" id="gdd" class="container-fluid">
+        <div id="top">
+            <div id="top_left">
+
+                <div id="ewm" class="row">
+
+                    <div class="col-md-6 box">
+                        <div>
+                            <img src="~/Images/牛工厂公众号二维码.jpg" class="ewmimg" />
+
+                            <p style="font-size:0.75em;">扫码关注公众号</p>
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-6 box">
+                        <div>
+                            <img src="~/Images/淘宝店铺.jpg" class="ewmimg" />
+                            <p style="font-size:0.75em;">扫码逛淘宝店铺</p>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                @if (true)
+                {
+                    Rows d = ViewBag.userInfo;
+                    <div id="customer" style="float:left;">
+                        <table style="width:100%" border-collapse collapse;>
+                            <tr><td style="width:100px;" class="lefttd">客户编号</td><td class="lefttd" id="menu"><a href="#">@d.CustomerNo</a></td></tr>
+                            <tr><td>客户名称</td><td>@d.CustomerName</td></tr>
+                            <tr><td class="lefttd">客服信息</td><td class="lefttd">@d.EmployeeName</td></tr>
+                            <tr><td>电话</td><td>@d.EmployeeMobile</td></tr>
+                        </table>
+                        <div style="text-align:center;margin-top:25px;">
+                            <a href="~/Images/4--工艺流程图图标(1).png" target="_blank" class="btn btn-info" style="margin-right:5px;font-size:10px;">查看工艺流程图</a>
+                            <a href="/CustService/Index" target="_blank" class="btn btn-info" style="font-size:10px;">查看联系方式</a>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <a href="http://www.sunpn.com/" style="background:url('../../Images/广告1.png') no-repeat center;width:100%;height:100%;background-size:100% 100%">
+
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="http://www.sunpn.com/" style="background:url('../../Images/广告2.png') no-repeat center;width:100%;height:100%;background-size:100% 100%">
+
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="http://www.sunpn.com/" style="background:url('../../Images/广告3.png') no-repeat center;width:100%;height:100%;background-size:100% 100%">
+
+                        </a>
+                    </div>
+                </div>
+                <!-- 如果需要分页器 -->
+                <div class="swiper-pagination"></div>
+
+                <!-- 如果需要导航按钮 -->
+                @*<div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>*@
+
+                <!-- 如果需要滚动条 -->
+                @*<div class="swiper-scrollbar"></div>*@
+            </div>
+        </div>
+
+        <div id="list" style="height:50px;width:80px;position:fixed;top:170px;left:11.5%;opacity:0.9;background-color:#B0E4ff;border-radius:5px;border:1px solid #6db8ed;">
+            <center>
+                <ul style="list-style-type:none;text-align:center;padding:0px;">
+                    <li><a href="javascript:window.history.go(-1)">注销系统</a></li>
+                </ul>
+            </center>
+        </div>
+
+        <div id="content">
+            <div id="left">
+                <table class="table table-bordered table-striped table-hover text-center" data-pagination="true" id="tabOrderInfo" data-search="true" @*data-show-toggle="true"*@ data-side-pagination="client" data-page-size="10" data-striped="true" data-search-align="left"></table>
+                <div id="smallDiv"></div>
+                <span id="orderInfo" hidden="hidden"> @ViewBag.jsonOrder</span>
+            </div>
+            <div id="center">
+                <h6>
+                    订单号：--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    订单日期：--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    订单状态：--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    预计出货日期：--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    物流单号：--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </h6>
+                <table class="table table-bordered table-striped table-hover text-center" style="width:100%">
+                    <tr>
+                        <th rowspan="2">生产单号</th>
+                        <th rowspan="2">产品名称</th>
+                        <th rowspan="2">总数量</th>
+                        <th colspan="8">生产流程实时进度</th>
+                        <th rowspan="2">生产单状态</th>
+                        <th rowspan="2">物料状态</th>
+                        <th rowspan="2">资料下载</th>
+                    </tr>
+                    <tr>
+                        <th>焊接</th>
+                        <th>边框</th>
+                        <th>定位</th>
+                        <th>接线</th>
+                        <th>程序</th>
+                        <th>测试</th>
+                        <th>软件</th>
+                        <th>包装</th>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 按钮触发模态框 -->
+    @*<a class="btn  btn-lg" data-toggle="modal" data-target="#myModal">开始演示模态框</a>*@
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">物料状态</h4>
+                </div>
+                <div class="modal-body" style="text-align:center;">
+                    <table class="table table-bordered table-striped table-hover text-center" style="width:100%" id="MnInfoTab"></table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal1">
+        <div style="width: 200px;height:20px; z-index: 20000; position: absolute; text-align: center; left: 50%; top: 50%;margin-left:-100px;margin-top:-10px">
+            <div class="progress progress-striped active" style="margin-bottom: 0;">
+                <div class="progress-bar" style="width: 100%;"></div>
+            </div>
+            <h5 style="color:black"> <strong>数据加载中，请稍后…！</strong> </h5>
+        </div>
+    </div>
+    <script src="~/Scripts/kuaidiHelper.js"></script>
+    <script src="~/Scripts/swiper.min.js"></script>
+    <script src="~/Scripts/index.js"></script>
+    <script>
+        var mySwiper = new Swiper('.swiper-container', {
+            //direction: 'vertical', // 垂直切换选项
+            loop: true, // 循环模式选项
+            autoplay: true,
+
+            // 如果需要分页器
+            pagination: {
+                el: '.swiper-pagination',
+            },
+
+            // 如果需要前进后退按钮
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+
+            // 如果需要滚动条
+            scrollbar: {
+                el: '.swiper-scrollbar',
+            },
+        })
+
+
+        //订单列表信息
+        $(function () {
+            var obj = JSON.parse($("#orderInfo").text());
+            var str = '[';
+            var arr = new Array();
+            if (obj.document.Count == "1") {
+                str += "{\"OrderNo\":\"" + obj.document.Data.Row["SoCode"] + "\",\"OrderDate\":\"" + obj.document.Data.Row["SoStartDate"] + "\",\"OrderState\":\"" + obj.document.Data.Row["SoStatus"] + "\"},";
+                $("#center").load("/Main/SelectOrder?orderID=" + obj.document.Data.Row);
+            } else {
+                for (var info in obj.document.Data.Row) {
+                    str += "{\"OrderNo\":\"" + obj.document.Data.Row[info].SoCode + "\",\"OrderDate\":\"" + obj.document.Data.Row[info].SoStartDate + "\",\"OrderState\":\"" + obj.document.Data.Row[info].SoStatus + "\"},";
+                }
+                $("#center").load("/Main/SelectOrder?orderID=" + obj.document.Data.Row[0].SoCode);
+            }
+            str = str.substr(0, str.length - 1) + "]"
+            var jsObject = JSON.parse(str);
+
+
+            $('#tabOrderInfo').bootstrapTable({
+                columns: [{
+                    field: 'OrderNo',
+                    title: '订单号'
+                }, {
+                    field: 'OrderDate',
+                    title: '下单日期'
+                }, {
+                    field: 'OrderState',
+                    title: '订单状态'
+                }],
+
+                data: jsObject,
+                onClickRow: function (row, $element) {
+                    showModal();
+                    var orderNo = row.OrderNo;
+                    $("#center").load("/Main/SelectOrder?orderID=" + orderNo);
+                    hideModal();
+                }
+
+            })
+
+
+        })
+
+        //缺料信息
+        function mnInfo(moColde) {
+            $("#MnInfoTab").find("tr th").remove();
+            $("#MnInfoTab").find("tr td").remove();
+            var str = "<tr><th>物料名称</th><th>缺料状态</th><th>预计到达时间</th></tr>";
+            $.ajax({
+                type: "Get",
+                url: "/Main/getMnInfo",
+                data: { moCode: moColde },
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    if (obj.document.Count == "1") {
+                        str += "<tr><td>" + obj.document.Data.Row["MName"] + "</td><td>" + obj.document.Data.Row["StockLackQty"] + "</td><td>" + obj.document.Data.Row["StockArriveDate"] + "</td></tr>";
+                    } else {
+                        for (var info in obj.document.Data.Row) {
+                            str += "<tr><td>" + obj.document.Data.Row[info].MName + "</td><td>" + obj.document.Data.Row[info].StockLackQty + "</td><td>" + obj.document.Data.Row[info].StockArriveDate + "</td></tr>";
+                        }
+                    }
+                    $("#myModalLabel").text("物料状态");
+                    $("#MnInfoTab").append(str);
+                }
+            })
+        }
+
+        //资料信息获取
+        function downFileInfo(moColde) {
+            $("#MnInfoTab").find("tr th").remove();
+            $("#MnInfoTab").find("tr td").remove();
+            var str = "<tr><th>资料下载</th></tr>";
+            $.ajax({
+                type: "Get",
+                url: "/Main/downFileInfo",
+                data: { moCode: moColde },
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    if (obj.document.Count == "1") {
+                        str += "<tr><td>" + obj.document.Data.Row["FileName"] + "</td><td>" + obj.document.Data.Row["ServerFileName"] + "</td><td>" + obj.document.Data.Row["FilePath"] + "</td></tr>";
+                    } else {
+                        for (var info in obj.document.Data.Row) {
+                            str += "<tr><td><a  style=\"text-decoration:none; cursor:pointer;\" onclick=\"downFiles('" + obj.document.Data.Row[info].ServerFileName + "','" + obj.document.Data.Row[info].FilePath + "','" + obj.document.Data.Row[info].FileName + "')\">" + obj.document.Data.Row[info].FileName + "</a></td><td  hidden=\"hidden\">" + obj.document.Data.Row[info].FilePath + "</td></tr>";
+                        }
+                    }
+                    $("#myModalLabel").text("资料下载");
+                    $("#MnInfoTab").append(str);
+                }
+            })
+        }
+
+        //资料下载
+        function downFiles(serFileName, serFilePath, clicName) {
+            post("/Main/downFile", { serFileName: serFileName, serFilePath: serFilePath, clicName: clicName });
+
+            //$.ajax({
+            //    type: "Get",
+            //    url: "/Main/downFile",//
+            //    data: { serFileName: serFileName, serFilePath: serFilePath, clicName: clicName },
+            //    success: function (data) {
+            //        location.href = data;
+            //        //if (data == "Sucess") {
+            //        //    alert("下载成功！\r（已保存桌面）");
+            //        //} else {
+            //        //    alert(data);
+            //        //}
+            //    }
+            //})
+        }
+
+        //物流信息
+        function getPhyInfo(PhyCode, PhyComName) {
+            PhyCode = PhyCode.replace(/\s+/g, ""); //快递号
+            var str = PhyComName + "  " + PhyCode;
+            PhyName = get_express_company_pinyin(PhyComName); //获取快递公司代码
+            $.ajax({
+                type: "Get",
+                url: "/Main/getPhyInfo",
+                data: { PhyCode: PhyCode, PhyName: PhyName },
+                success: function (data) {
+                    post('/Express/Index', {
+                        data: data,
+                        PhyComName: str
+                    });
+                }
+            })
+        }
+
+        function post(URL, PARAMS) {
+            var temp = document.createElement("form");
+            temp.action = URL;
+            temp.method = "post";
+            temp.style.display = "none";
+            for (var x in PARAMS) {
+                var opt = document.createElement("textarea");
+                opt.name = x;
+                opt.value = PARAMS[x];
+                // alert(opt.name)
+                temp.appendChild(opt);
+            }
+            document.body.appendChild(temp);
+            temp.submit();
+            return temp;
+        }
+
+        //加载动画隐藏
+        function hideModal() {
+            $('#myModal1').modal('hide');
+        }
+        //加载动画显示
+        function showModal() {
+            $('#myModal1').modal({ backdrop: 'static', keyboard: false });
+        }
+
+
+        $(function () {
+            $("#list").hide();
+            $("#menu").hover(function () {
+                $("#list").show();
+            }, function () {
+                $("#list").hide();
+            })
+            // 鼠标移动到list的div上的时候list div不会被隐藏
+            $("#list").hover(function () {
+                $("#list").show();
+            }, function () {
+                $("#list").hide();
+            })
+        });
+
+        //$(document).ready(function (e) {
+        //    var counter = 0;
+        //    if (window.history && window.history.pushState) {
+        //        $(window).on('popstate', function () {
+        //            window.history.pushState('forward', null, '#');
+        //            window.history.forward(1);
+        //            //alert("不可回退");  //如果需在弹框就有它
+        //            changeCheckCode();
+        //            self.location = "/Login/Index"; //如查需要跳转页面就用它
+        //        });
+        //    }
+
+        //    window.history.pushState('forward', null, '#'); //在IE中必须得有这两行
+        //    window.history.forward(1);
+        //});
+
+    </script>
+</body>
+
+</html>

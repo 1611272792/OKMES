@@ -1,0 +1,42 @@
+﻿ 
+    <h6> 生产单实时数据：</h6>
+    <table class="table table-bordered table-striped table-hover text-center" style="width:100%">
+        <tr>
+            <th rowspan="2">生产单号</th>
+            <th rowspan="2">产品名称</th>
+            <th rowspan="2">总数量</th>
+            <th rowspan="2">下单日期</th>
+            <th colspan="7">生产流程实时进度</th>
+            <th rowspan="2">生产单状态</th>
+            <th rowspan="2">物料状态</th>
+            <th rowspan="2">物料查询</th>
+            <th rowspan="2">下载相关生产资料</th>
+        </tr>
+        <tr>
+            <th>外框</th>
+            <th>定位</th>
+            <th>接线</th>
+            <th>程序</th>
+            <th>测试</th>
+            <th>软件</th>
+            <th>出货</th>
+        </tr>
+        <tr>
+            <td>数据123</td>
+            <td>数据123</td>
+            <td>数据123</td>
+            <td>数据123</td>
+            <td>数据123</td>
+            <td>数据123</td>
+            <td>数据123</td>
+            <td>数据123</td>
+            <td>数据123</td>
+            <td>数据123</td>
+            <td>数据123</td>
+            <td>数据123</td>
+            <td>数据123</td>
+            <td>数据123</td>
+            <td>数据123</td>
+        </tr>
+    </table>
+ 

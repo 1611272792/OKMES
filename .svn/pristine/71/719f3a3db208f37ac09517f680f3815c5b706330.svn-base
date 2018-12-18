@@ -1,0 +1,114 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/style.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="info">
+            <h1>讯鹏科技订单信息用户自助查询系统</h1><span>Made with <i @*class="fa fa-heart"*@></i> by <a href="#">Self-service enquiry system</a></span>
+        </div>
+    </div>
+    <div class="form">
+        <div class="thumbnail">
+            <img src="~/Images/牛Logo.png" />
+            @*<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/hat.svg" />*@</div>
+        <form class="register-form" action="" target="nm_iframe">
+            <input type="text" placeholder="客户编号" id="userName"/>
+            <input type="password" placeholder="原密码" id="oldPwd"/>
+            <input type="text" placeholder="新密码"  id="newPwd"/>
+            <button onclick="UpdPwd()">修改</button>
+            <p class="message">Already login? <a href="#">登录</a></p>
+        </form>
+        <form class="login-form"  action="" target="nm_iframe">
+            <input type="text" placeholder="客户编号" id="userNo" />
+            <input type="password" placeholder="密码" id="pwd"/>
+            <button onclick="CheckUser()">登录</button> 
+            <p class="message">Change password? <a href="#">修改密码</a></p>
+        </form>
+        <iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe>    
+    </div>
+
+    @*<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'> </script>*@
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/index.js"></script>
+
+    <script type="text/javascript">
+        function post(URL, PARAMS) {
+            var temp = document.createElement("form");
+            temp.action = URL;
+            temp.method = "post";
+            temp.style.display = "none";
+            for (var x in PARAMS) {
+                var opt = document.createElement("textarea");
+                opt.name = x;
+                opt.value = PARAMS[x];
+                // alert(opt.name)
+                temp.appendChild(opt);
+            }
+            document.body.appendChild(temp);
+            temp.submit();
+            return temp;
+        }
+     
+        //登录验证
+        function CheckUser() {
+            var userNo = $("#userNo").val();
+            var pwd = $("#pwd").val();
+            $.ajax({
+                type: "Get",
+                url: "/Login/CheckUser",
+                dataType: 'json',
+                data: { userName: userNo, pwd: pwd },
+                success: function (data) {
+                    if (data.document.ReturnValue == "1") {
+                        $.ajaxSettings.async = false;
+                        post('/Main/Index', {
+                            RowNo: data.document.Data.Row.RowNo,
+                            CustomerNo: data.document.Data.Row.CustomerNo,
+                            CustomerName: data.document.Data.Row.CustomerName,
+                            EmployeeName: data.document.Data.Row.EmployeeName,
+                            EmployeeMobile: data.document.Data.Row.EmployeeMobile
+                        });
+                        //window.location.href = '/Main/Index?userName=';
+                    } else {
+                        alert(data.document.ReturnMessage);
+                    }
+                }
+            });
+        }
+
+        
+
+        //修改密码
+        function UpdPwd() {
+            var userName = $("#userName").val();
+            var oldPwd = $("#oldPwd").val();
+            var newPwd = $("#newPwd").val();
+            $.ajax({
+                type: "Get",
+                url: "/Login/UpdUser",
+                dataType: 'json',
+                data: { userName: userName, oldPwd: oldPwd, newPwd: newPwd},
+                success: function (data) {
+                    if (data.document.ReturnValue == "1") {
+                        alert(data.document.ReturnMessage);
+                        location.reload();
+                    } else {
+                        alert(data.document.ReturnMessage);
+                    }
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+﻿@using System.Data;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+@Styles.Render("~/Content/css")
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    @*<link href="~/Content/bootstrap.css" rel="stylesheet" />*@
+    <style>
+        #top {
+            border: 1px solid black;
+            width: 100%;
+            height: 180px;
+            padding-top: 15px;
+            padding-left: 15px;
+            padding-right: 15px;
+            position: relative;
+        }
+
+        /*top中的三个板块*/
+        #top_left, #top_center, #top_right {
+            float: left;
+            width: 33%;
+            height: 130px;
+            border: 1px solid green;
+        }
+
+        #content {
+             border: 1px solid black;
+            width: 100%;
+            padding-top:15px;
+            padding-left:15px;
+            padding-right:15px;
+            min-height: 750px;
+        }
+
+         /*左边部门列表样式*/
+        #left {
+            border: 1px solid red;
+            width: 21%;
+            min-height: 700px;
+            float: left;
+        }
+
+
+        /*中间部门列表样式*/
+        #center {
+            border: 1px solid red;
+            width: 59%;
+            min-height: 700px;
+            float: left;
+        }
+
+        /*右边信息样式*/
+        #right {
+            border: 1px solid purple;
+            width: 20%;
+            min-height: 700px;
+            float: left;
+        }
+
+        /*列表标题的样式*/
+      #left th, #center th {
+            text-align:center;
+            vertical-align:middle;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div style="width:100%;min-height:100%;" id="gdd">
+        <div id="top">
+            @*<div style="text-align:center;margin-top:50px;">
+                    订单号：<input type="text" class="form-control" style="display:inline;" id="orderID"/>
+                    <button type="button" id="SelectDataDiffs" class="btn btn-info Buttons">
+                        查询
+                    </button>
+                </div>
+
+                <br />
+
+                <div style="position:absolute;bottom:5px;text-align:center;width:100%;">
+                    发货状态：<label>已发货</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    下单日期：<label>2018-10-11</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    预计出货：<label>2018-11-11</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    下单渠道：<label>淘宝店铺</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    物流单号：<label>785664862486</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>*@
+
+            <div id="top_left">
+                <div id="customer" style="float:left;border:1px solid black;">
+                    客户编号：<label>LDH001</label><br />客户名称：<label>刘德华</label>
+                </div>
+                <div id="service" style="float:left;border:1px solid black;margin-left:5px;">
+                    客服信息：<label>刘乐</label><br />
+                    电话：<label>18827509993</label><br />
+                    资料下载：<label><a href="#">资料下载</a></label><br />
+                    工艺流程图：<label><a href="#">点击查看</a></label><br />
+                </div>
+
+            </div>
+            <div id="top_center"><h1>广告位</h1></div>
+            <div id="top_right">二维码</div>
+        </div>
+
+        <div id="content">
+            <div id="left">
+                <h6>订单信息</h6>
+                <table class="table table-bordered table-striped table-hover text-center" style="width:100%">
+                    <tr><th>订单号</th><th>下单日期</th><th>订单状态</th></tr>
+
+                </table>
+            </div>
+            <div id="center">
+                <h6>
+                    订单号：666888&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    订单日期：2018-10-11&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    订单状态：已出货&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    预计出货日期：2018-10-22&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    物流单号：7546813
+                </h6>
+                <table class="table table-bordered table-striped table-hover text-center" style="width:100%">
+                    <tr>
+                        <th rowspan="2">生产单号</th>
+                        <th rowspan="2">产品名称</th>
+                        <th rowspan="2">总数量</th>
+                        <th colspan="7">生产流程实时进度</th>
+                        <th rowspan="2">生产单状态</th>
+                        <th rowspan="2">物料状态</th>
+                        <th rowspan="2">缺料信息</th>
+                    </tr>
+                    <tr>
+                        <th>外框</th>
+                        <th>定位</th>
+                        <th>接线</th>
+                        <th>程序</th>
+                        <th>测试</th>
+                        <th>软件</th>
+                        <th>出货</th>
+                    </tr>
+
+                </table>
+            </div>
+            <div id="right">
+                <h6>数据信息：</h6>
+                物料信息<br />
+                物料信息<br />
+                物料信息<br />
+                物料信息<br />
+                物料信息<br />
+                物料信息<br />
+                物料信息<br />
+            </div>
+        </div>
+    </div>
+    <script>
+
+        $("#SelectDataDiffs").click(function () {
+            var orderId = $.trim($("#orderID").val());
+            if (orderId.length <= 0) {
+                alert("请输入订单号");
+            } else {
+                $.ajax({
+                    type: "Post",
+                    url: "/Main/SelectOrder",
+                    data: { orderID: orderId },
+                    success: function (data) {
+                        //alert(data);
+                        //var od = JSON.parse(data);
+                        $("#gdd").html(data);
+                    }
+                })
+            }
+
+        })
+
+
+
+    </script>
+</body>
+
+</html>

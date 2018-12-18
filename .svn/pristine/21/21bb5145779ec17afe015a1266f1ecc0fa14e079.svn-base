@@ -1,0 +1,68 @@
+﻿using SunpnMesWeb.Common;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Services;
+using System.Xml;
+using Newtonsoft.Json;
+using SunpnMesWeb.Models;
+using System.Data;
+
+namespace SunpnMesWeb.Controllers
+{
+    public class MainController : Controller
+    { 
+        // GET: Main           
+        public ActionResult Index(Rows rowsinfo)
+        {
+            ViewBag.userInfo = rowsinfo;  //客户信息
+            ServiceReference1.MesWebSoapClient mws = new ServiceReference1.MesWebSoapClient();
+            string XmlInfo = mws.Call("83", "<document><CustomerNo>" + rowsinfo.CustomerNo + "</CustomerNo ></document>", ""); 
+            ViewBag.jsonOrder= JsonHelper.XmlTojson(XmlInfo);  //订单数据
+            return View();
+        }
+
+        //[HttpGet]
+        //public string GetDepartment(string CustomerNo) {
+        //    ServiceReference1.MesWebSoapClient mws = new ServiceReference1.MesWebSoapClient();
+        //    string ss = mws.Call("83", "<document><CustomerNo>" + CustomerNo + "</CustomerNo ></document>", ""); 
+        //    string jsonInfo = JsonHelper.XmlTojson(ss);  //订单数据
+        //    return jsonInfo; 
+        //}
+
+
+        /// <summary>
+        /// 获取订单详情
+        /// </summary>
+        /// <param name="orderID"></param>
+        /// <returns></returns>
+        public ActionResult SelectOrder(string orderID) {
+            ServiceReference1.MesWebSoapClient s = new ServiceReference1.MesWebSoapClient();
+            string ss = s.Call("80", "<document><SoCode>" + orderID + "</SoCode ></document>", ""); 
+            //解析xml
+            var doc = new XmlDocument();
+            doc.LoadXml(ss);
+            Hashtable hs = new Hashtable();
+            List<Hashtable> list = new List<Hashtable>();
+            //DataTable dt = new DataTable();
+            foreach (XmlElement xmlInfo in doc.SelectNodes(@"/document/So/Row"))
+            {
+                foreach (XmlAttribute attribute in xmlInfo.Attributes)
+                {
+                    hs.Add(attribute.Name, attribute.Value);
+                }
+                list.Add(hs);
+            }
+        
+            ViewBag.hs=hs;
+            return PartialView("_SelectOrder");
+        }
+    }
+ 
+ 
+}

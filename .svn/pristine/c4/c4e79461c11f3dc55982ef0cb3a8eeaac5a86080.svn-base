@@ -1,0 +1,89 @@
+﻿using SunpnMesWeb.Common;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Services;
+using System.Xml;
+using Newtonsoft.Json;
+using SunpnMesWeb.Models;
+using System.Data;
+
+namespace SunpnMesWeb.Controllers
+{
+    public class MainController : Controller
+    { 
+        // GET: Main           
+        public ActionResult Index(Rows rowsinfo)
+        {
+            ViewBag.userInfo = rowsinfo;  //客户信息
+            ServiceReference1.MesWebSoapClient mws = new ServiceReference1.MesWebSoapClient();
+            string ss = mws.Call("83", "<document><CustomerNo>" + rowsinfo.CustomerNo + "</CustomerNo ></document>", "");//20181007005
+            ViewBag.jsonOrder= JsonHelper.XmlTojson(ss);  //订单数据
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SelectOrder(string orderID) {
+            ServiceReference1.MesWebSoapClient s = new ServiceReference1.MesWebSoapClient();
+            string ss = s.Call("80", "<document><SoCode>" + orderID + "</SoCode ></document>", "");//20181007005
+            //解析xml
+            var doc = new XmlDocument();
+            doc.LoadXml(ss);
+            Hashtable hs = new Hashtable();
+            List<Hashtable> list = new List<Hashtable>();
+            //DataTable dt = new DataTable();
+            foreach (XmlElement xmlInfo in doc.SelectNodes(@"/document/So/Row"))
+            {
+                foreach (XmlAttribute attribute in xmlInfo.Attributes)
+                {
+                    hs.Add(attribute.Name, attribute.Value);
+                }
+                list.Add(hs);
+            }
+          
+        
+            ViewBag.hs=hs;
+             
+            //string json = Newtonsoft.Json.JsonConvert.SerializeXmlNode(doc);//json    
+
+            //OrderTitle ob = new OrderTitle();
+            //object ab = JsonHelper.JsonToObject(json, ob);
+
+            //object OrderJson = JsonHelper.toObject<string>(json);
+
+            //var rowNoteList = doc.SelectNodes("/document/So");
+            //Hashtable hs = new Hashtable();
+            //if (rowNoteList != null)
+            //{
+
+            //    foreach (XmlNode rowNode in rowNoteList)
+            //    {
+            //        var fieldNodeList = rowNode.ChildNodes;
+            //        foreach (XmlNode courseNode in fieldNodeList)
+            //        {
+            //            if (courseNode.Attributes != null)
+            //            {
+            //                //Hashtable接收
+            //                hs.Add(courseNode.Name, courseNode.InnerXml);
+            //            }
+            //        }
+            //    }
+            //    //ViewBag.biaoti = hs;
+            //}
+            //else
+            //{
+            //    //ViewBag.biaoti = null;
+            //}
+
+
+            return PartialView("_SelectOrder");
+        }
+    }
+ 
+ 
+}

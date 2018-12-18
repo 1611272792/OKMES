@@ -1,0 +1,149 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <style>
+        #main {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            /*background-image: url('../../Images/3--快递查询界面背景.png');*/
+            background:url('../../Images/3--快递查询界面背景.png') no-repeat center;
+            background-size: 100% 99.9%;
+        }
+
+        #toobar {
+            width: 96%;
+            height: 55px;
+            /*border: 1px solid red;*/
+            position: absolute;
+            top: 25px;
+            left: 30px;
+        }
+
+        #left {
+            /*border:1px solid orange;*/
+            width:880px;
+            /*margin-left:60px;*/
+            position: absolute;
+            top: 125px;
+            left: 50px;
+            height:768px;
+        }
+
+                p {
+            color: #266183;
+        }
+
+        body{font-size: 16px;}
+			ul li{list-style: none;}
+			.track-rcol{width: 900px; border: 1px solid #eee;position:absolute;left:980px;top:125px;height:768px;}
+			.track-list{margin: 20px; padding-left: 5px; position: relative;}
+			.track-list li{position: relative; padding: 9px 0 0 25px; line-height: 18px; border-left: 1px solid #d9d9d9; color: #999;}
+			.track-list li.first{color: red; padding-top: 0; border-left-color: #fff;}
+			.track-list li .node-icon{position: absolute; left: -6px; top: 50%; width: 11px; height: 11px; background: url(http://demo.daimabiji.com/3531/img/order-icons.png)  -21px -72px no-repeat;}
+			.track-list li.first .node-icon{background-position:0 -72px;}
+			.track-list li .time{margin-right: 20px; position: relative; top: 4px; display: inline-block; vertical-align: middle;}
+			.track-list li .txt{max-width: 600px; position: relative; top: 4px; display: inline-block; vertical-align: middle;}
+			.track-list li.first .time{margin-right: 20px; }
+			.track-list li.first .txt{max-width: 600px; }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div id="toobar">
+            <p style="padding-left:16px;font-size:large;float:left;"> 订单号信息</p>
+            <p style="margin-left:950px;font-size:large">物流信息</p>
+        </div>
+        <h2 style="position:absolute;left:52px;top:80px;font-size:initial;color:#266183;">订单号：XXXXXXX</h2>
+        <h2 style="position:absolute;left:985px;top:80px;font-size:initial;color:#266183;">XX快递：</h2>
+        <div id="left">
+            <div id="text" style="margin-left:30px;">
+                <p>产品：XXXX</p>
+                <p>单价：XX</p>
+                <p>数量：XXXXX</p>
+                <p>商品总价：XXXXXX</p>
+                <p>联系方式：XXXXXXXX</p>
+                <p>收货地址：XXXXXXXX</p>
+            </div>
+        </div>
+        <div class="track-rcol">
+            <div class="track-list">
+                <ul id="info    ">
+                    @*<li class="first">
+                        <i class="node-icon"></i>
+                        <span class="time">2016-03-10 18:07:15</span>
+                        <span class="txt">感谢您在京东购物，欢迎您再次光临！</span>
+                    </li>
+                    <li>
+                        <i class="node-icon"></i>
+                        <span class="time">2016-03-10 18:07:15</span>
+                        <span class="txt">【京东到家】京东配送员【申国龙】已出发，联系电话【18410106883，感谢您的耐心等待，参加评价还能赢取京豆呦】</span>
+                    </li>
+                    <li>
+                        <i class="node-icon"></i>
+                        <span class="time">2016-03-10 18:07:15</span>
+                        <span class="txt">感谢您在京东购物，欢迎您再次光临！</span>
+                    </li>
+                    <li>
+                        <i class="node-icon"></i>
+                        <span class="time">2016-03-10 18:07:15</span>
+                        <span class="txt">感谢您在京东购物，欢迎您再次光临！</span>
+                    </li>
+                    <li>
+                        <i class="node-icon"></i>
+                        <span class="time">2016-03-10 18:07:15</span>
+                        <span class="txt">感谢您在京东购物，欢迎您再次光临！</span>
+                    </li>
+                    <li>
+                        <i class="node-icon"></i>
+                        <span class="time">2016-03-10 18:07:15</span>
+                        <span class="txt">感谢您在京东购物，欢迎您再次光临！</span>
+                    </li>*@
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            //$.ajax({
+            //    type: 'GET',
+            //    url: '{siteurl($siteid)}/api.php',
+            //    dataType: 'json',
+            //    success: function (data) {
+            //        var wrap = $("#a");
+            //        var str = '';
+            //        for (var key in data) {
+            //            str += '<li><i class="node-icon"></i><span class="time">' + time + '</span><span class="txt">' + tex + '</span></li>'
+            //            wrap.append($("<li><i class='node-icon'></i>").html(key + ': ' + data[key]));
+            //            wrap.append(str);
+            //        }
+            //    }
+            //});
+            var data = { "message": "ok", "nu": "802186889049014262", "ischeck": "1", "condition": "F00", "com": "yuantong", "status": "200", "state": "3", "data": [{ "time": "2018-10-22 16:18:26", "ftime": "2018-10-22 16:18:26", "context": "客户 签收人: 同事 已签收 感谢使用圆通速递，期待再次为您服务", "location": "" }, { "time": "2018-10-22 14:35:57", "ftime": "2018-10-22 14:35:57", "context": "【广东省深圳市吉龙公司】 派件人: 李泳 派件中 派件员电话13543320616", "location": "" }, { "time": "2018-10-22 13:14:47", "ftime": "2018-10-22 13:14:47", "context": "【广东省深圳市吉龙公司】 已收入", "location": "" }, { "time": "2018-10-22 07:41:28", "ftime": "2018-10-22 07:41:28", "context": "【深圳转运中心】 已发出 下一站 【广东省深圳市吉龙公司】", "location": "" }, { "time": "2018-10-22 07:40:44", "ftime": "2018-10-22 07:40:44", "context": "【深圳转运中心】 已收入", "location": "" }, { "time": "2018-10-22 04:32:28", "ftime": "2018-10-22 04:32:28", "context": "【深圳转运中心】 已收入", "location": "" }, { "time": "2018-10-22 01:38:41", "ftime": "2018-10-22 01:38:41", "context": "【广州转运中心】 已发出 下一站 【深圳转运中心】", "location": "" }, { "time": "2018-10-22 01:36:17", "ftime": "2018-10-22 01:36:17", "context": "【广州转运中心】 已收入", "location": "" }, { "time": "2018-10-21 21:36:14", "ftime": "2018-10-21 21:36:14", "context": "【广东省广州市嘉和公司】 已发出 下一站 【广州转运中心】", "location": "" }, { "time": "2018-10-21 20:36:03", "ftime": "2018-10-21 20:36:03", "context": "【广东省广州市嘉和公司】 已打包", "location": "" }, { "time": "2018-10-21 20:36:03", "ftime": "2018-10-21 20:36:03", "context": "【广东省广州市嘉和公司】 已收件", "location": "" }, { "time": "2018-10-21 15:49:24", "ftime": "2018-10-21 15:49:24", "context": "【广东省广州市会展公司】 取件人: 罗海辉 已收件", "location": "" }] };
+
+            var wrap = $("#info");
+            var str = '';
+            for (var key in data.data) {
+                if (key == 0) {
+                    str += '<li  class="first"><i class="node-icon"></i><span class="time">' + data.data[key].time + '</span><span class="txt">' + data.data[key].context + '</span></li>'
+                } else {
+                    str += '<li><i class="node-icon"></i><span class="time">' + data.data[key].time + '</span><span class="txt">' + data.data[key].context + '</span></li>'
+                }
+                //wrap.append($("<li><i class='node-icon'></i>").html(key + ': ' + data[key]));
+            }
+            wrap.append(str);
+        });
+    </script>
+</body>
+</html>

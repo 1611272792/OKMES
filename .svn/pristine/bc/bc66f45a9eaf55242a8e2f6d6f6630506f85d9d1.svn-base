@@ -1,0 +1,144 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Index</title>
+    <style>
+        #main {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            /*background: url('../../Images/7--客服以联系方式.png') no-repeat center;*/
+            background: url('../../Images/7--客服以联系方式背景.png') no-repeat center;
+            background-size: 100% 99.9%;
+        }
+
+        #toobar {
+            width:90%;
+            height:55px;
+            /*border:1px solid red;*/           
+            position:absolute;
+            top:25px;
+            left:30px;
+        }
+
+        #cinfo {
+            width:93%;
+            height:295px;
+            /*border:1px solid black;*/
+            position:absolute;
+            top:80px;
+        }
+
+        p {
+            color: #175172;
+        }
+
+
+        #uinfo {
+            width:99%;
+            height:470px;
+            border:1px solid orange;
+            position:absolute;
+            top:449px;
+        }
+
+        #one {
+            position: absolute;
+            width:363px;
+            height:380px;
+            top: 10px;
+            right: 0;
+            left: 110px;
+            bottom: 0;
+            /*background-image: url('../../Images/7--客服以联系人员背景.png');*/
+            background: url('../../Images/7--客服以联系人员背景.png') no-repeat center;
+            background-size: 100% 99.9%;    
+            border: 1px solid red;
+        }
+
+        /*两个图片之间间隔73px*/
+        #two {
+            position: absolute;
+            width: 363px;
+            height: 380px;
+            top: 10px;
+            right: 0;
+            left: 543px;
+            bottom: 0;
+            /*background-image: url('../../Images/7--客服以联系人员背景.png');*/
+            background: url('../../Images/7--客服以联系人员背景.png') no-repeat center;
+            background-size: 100% 99.9%;
+            border: 1px solid red;
+        }
+
+        #three {
+            position: absolute;
+            width: 363px;
+            height: 380px;
+            top: 10px;
+            right: 0;
+            left: 983px;
+            bottom: 0;
+            /*background-image: url('../../Images/7--客服以联系人员背景.png');*/
+            background: url('../../Images/7--客服以联系人员背景.png') no-repeat center;
+            background-size: 100% 99.9%;
+            border: 1px solid red;
+        }
+
+                #four {
+            position: absolute;
+            width: 363px;
+            height: 380px;
+            top: 10px;
+            right: 0;
+            left: 1416px;
+            bottom: 0;
+            /*background-image: url('../../Images/7--客服以联系人员背景.png');*/
+            background: url('../../Images/7--客服以联系人员背景.png') no-repeat center;
+            background-size: 100% 99.9%;
+            border: 1px solid red;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div id="toobar">
+            <p style="padding-left:16px;"> 客服以及联系方式</p>
+        </div>
+        <div id="cinfo" style="padding-top:72px;padding-left:108px;">
+            <div id="text">
+                <p>公司地址：广东省深圳市龙岗区南湾街道立信路45号B栋4楼（地铁龙岗线丹竹头站C出口前行300米）</p>
+                <p>联系电话：0755-28212811,89313800，89313900,28884858,89368915</p>
+                <p>图文传真：0755-28212820</p>
+                <p>公司网址：<a href="Http://www.sunpn.com">Http://www.sunpn.com</a></p>
+                <p>电子邮箱：sunpn806#sunpn.com(发送邮件时请将#改为@@)</p>
+            </div>
+        </div>
+        <div id="uinfo">
+            <div id="one">
+
+            </div>
+            <div id="two">
+
+            </div>
+            <div id="three">
+
+            </div>
+            <div id="four">
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

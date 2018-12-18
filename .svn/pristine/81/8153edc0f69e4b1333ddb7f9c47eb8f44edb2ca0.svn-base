@@ -1,0 +1,81 @@
+﻿using SunpnMesWeb.Common;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Web;
+using System.Web.Mvc;
+using System.Xml;
+
+namespace SunpnMesWeb.Controllers
+{
+    public class LoginController : Controller
+    {
+        // GET: Login
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        /// <summary>
+      /// 账号登录验证
+      /// </summary>
+      /// <param name="userName">客户编号</param>
+      /// <param name="pwd">密码</param>
+      /// <returns></returns>
+        [HttpGet]
+        public ActionResult CheckUser(string userName,string pwd) {
+            ServiceReference1.MesWebSoapClient mws = new ServiceReference1.MesWebSoapClient();
+            string ss = mws.Call("81", "<document><CustomerNo>" + userName + "</CustomerNo ><CusPassword>"+ pwd + "</CusPassword></document>", "");//20181007005
+            return Content(JsonHelper.XmlTojson(ss));
+        }
+
+        /// <summary>
+        /// 修改密码
+        /// </summary>
+        /// <param name="userName">账号</param>
+        /// <param name="oldPwd">原密码</param>
+        /// <param name="newPwd">新密码</param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult UpdUser(string userName, string oldPwd,string newPwd)
+        {
+            ServiceReference1.MesWebSoapClient mws = new ServiceReference1.MesWebSoapClient();
+            string ss = mws.Call("82", "<document><CustomerNo>" + userName + "</CustomerNo ><CusPassword>" + oldPwd + "</CusPassword><NewCusPassword>"+newPwd+"</NewCusPassword></document>", "");//20181007005
+            return Content(XmlTojson(JsonHelper.XmlTojson(ss)));
+        }
+
+
+        /// <summary>
+        /// xml转化为json并去掉key里面的@符号
+        /// </summary>
+        /// <param name="xmlString">xml字符串</param>
+        /// <returns></returns>
+        public string XmlTojson(string xmlString) {
+            var doc = new XmlDocument();
+            doc.LoadXml(xmlString);
+            string json = Newtonsoft.Json.JsonConvert.SerializeXmlNode(doc);
+            Regex reg = new Regex("\"@([^ \"]*)\"\\s*:\\s*\"(([^ \"]+\\s*)*)\"");
+            string strPatten = "\"$1\":\"$2\"";
+            json = reg.Replace(json, strPatten);
+            return json;
+
+        }
+      
+
+
+        /// <summary>
+        /// 解析xml
+        /// </summary>
+        /// <param name="xml"></param>
+        /// <returns></returns>
+        public string analyXml(string xml) {
+            var doc = new XmlDocument();
+            doc.LoadXml(xml);
+            XmlNode root = doc.SelectSingleNode("/document");//指定一个节点
+            XmlNodeList childlist = root.ChildNodes;//获取节点下所有直接子节点
+            return "";
+        }
+
+    }
+}

@@ -1,0 +1,237 @@
+﻿@using System.Data;
+@using SunpnMesWeb.Models;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+@Styles.Render("~/Content/css")
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    
+    <script src="~/Scripts/bootstrap-table.js"></script>
+    <link href="~/Content/bootstrap-table.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap-table-zh-CN.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script> 
+    <style>
+        /*顶部div样式*/
+        #top {
+            border: 2px solid black;
+            width: 100%;
+            height: 180px;
+            padding-top: 15px;
+            padding-left: 15px;
+            padding-right: 15px;
+            position: relative;
+        }
+
+        /*顶部左边客户和客服div信息*/
+        #top_left {
+            float: left;
+            width: 20%;
+            height: 145px;
+            border: 1px solid green;
+        }
+
+        /*客户和客服*/
+        #customer, #service {
+            margin-left: 30px;
+            margin-top: 15px;
+            /*border:1px solid black;*/
+        }
+
+        /*顶部中间通知信息栏样式*/
+        #top_center {
+            float: left;
+            width: 57%;
+            height: 145px;
+            border: 1px solid green;
+        }
+
+        /*顶部右侧二维码样式*/
+        #top_right {
+            float: left;
+            width: 23%;
+            height: 145px;
+            border: 1px solid green;
+        }
+
+        /*中间显示数据的div*/
+        #content {
+            border: 2px solid orange;
+            width: 100%;
+            padding-top: 15px;
+            padding-left: 15px;
+            padding-right: 15px;
+            min-height: 735px;
+        }
+
+        /*中部左侧订单信息列表div样式*/
+        #left {
+            border: 1px solid red;
+            width: 21%;
+            min-height: 700px;
+            float: left;
+        }
+
+
+        /*中部生产单列表div样式*/
+        #center {
+            border: 1px solid red;
+            width: 79%;
+            min-height: 700px;
+            float: left;
+        }
+
+
+            /*订单和生产单列表标题的样式*/
+            #left th, #center th,.table th {
+                text-align: center;
+                vertical-align: middle;
+            }
+    </style>
+</head>
+<body>
+    <div style="width:100%;min-height:100%;" id="gdd">
+        <div id="top">
+            <div id="top_left">
+                @if (true)
+                {
+                    Rows d = ViewBag.userInfo;
+                    <div id="customer" style="float:left;">
+                        客户编号：<label>@d.CustomerNo</label><br />客户名称：<label>@d.CustomerName</label><br />
+                        客服信息：<label>@d.EmployeeName</label><br />
+                        电话：<label>@d.EmployeeMobile</label><br />
+                        工艺流程图：<label><a href="#">点击查看</a></label><br />
+                    </div>
+                }
+            </div>
+            <div id="top_center"><h1>信息通知栏</h1></div>
+            <div id="top_right"><h1>二维码</h1></div>
+        </div>
+
+
+
+        <div id="content">
+            <div id="left">
+                <table data-pagination="true" id="tabOrderInfo" data-search="true" data-show-toggle="true" data-side-pagination="client" data-page-size="15" data-striped="true" data-search-align="left"></table>
+                <div id="smallDiv"></div>
+                <span id="orderInfo" hidden="hidden"> @ViewBag.jsonOrder</span>
+            </div>
+            <div id="center">
+                <h6>
+                    订单号：--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    订单日期：--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    订单状态：--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    预计出货日期：--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    物流单号：--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </h6>
+                <table class="table table-bordered table-striped table-hover text-center" style="width:100%">
+                    <tr>
+                        <th rowspan="2">生产单号</th>
+                        <th rowspan="2">产品名称</th>
+                        <th rowspan="2">总数量</th>
+                        <th colspan="8">生产流程实时进度</th>
+                        <th rowspan="2">生产单状态</th>
+                        <th rowspan="2">物料状态</th>
+                        <th rowspan="2">资料下载</th>
+                    </tr>
+                    <tr>
+                        <th>焊接</th>
+                        <th>边框</th>
+                        <th>定位</th>
+                        <th>接线</th>
+                        <th>程序</th>
+                        <th>测试</th>
+                        <th>软件</th>
+                        <th>包装</th>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 按钮触发模态框 -->
+    <a class="btn  btn-lg" data-toggle="modal" data-target="#myModal">开始演示模态框</a>
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">物料状态</h4>
+                </div>
+                <div class="modal-body" style="text-align:center;">
+                    <table class="table table-bordered table-striped table-hover text-center" style="width:100%">
+                        <tr>
+                            <th>物料名称</th>
+                            <th>缺料数量</th>
+                            <th>预计到达时间</th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    @*<button type="button" class="btn btn-primary">提交更改</button>*@
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+    <script>
+        //订单列表信息
+        $(function () {
+            var obj = JSON.parse($("#orderInfo").text());
+            var str = '[';
+            var arr = new Array();
+            for (var info in obj.document.Data.Row) {
+                str += "{\"OrderNo\":\"" + obj.document.Data.Row[info].SoCode + "\",\"OrderDate\":\"" + obj.document.Data.Row[info].SoStartDate + "\",\"OrderState\":\"" + obj.document.Data.Row[info].SoStatus + "\"},";
+            }
+            str = str.substr(0, str.length - 1) + "]"
+            var jsObject = JSON.parse(str);
+
+
+            $('#tabOrderInfo').bootstrapTable({
+                columns: [{
+                    field: 'OrderNo',
+                    title: '订单号'
+                }, {
+                    field: 'OrderDate',
+                    title: '下单日期'
+                }, {
+                    field: 'OrderState',
+                    title: '订单状态'
+                }],
+
+                data: jsObject,
+                onClickRow: function (row, $element) {
+                    var orderNo = row.OrderNo;
+                    $("#center").load("/Main/SelectOrder?orderID=" + orderNo);
+                }
+
+            })
+
+        })
+
+        //缺料信息
+        function mnInfo(moColde) {
+            $.ajax({
+                type: "Get",
+                url: "/Main/getMnInfo",
+                data: { moCode: moColde },
+                success: function (data) {
+                }
+
+            })
+        }
+
+    </script>
+</body>
+
+</html>
