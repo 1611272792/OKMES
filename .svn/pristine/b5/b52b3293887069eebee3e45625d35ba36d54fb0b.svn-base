@@ -21,7 +21,6 @@
     <link href="~/Content/swiper.css" rel="stylesheet" />
     <script src="~/Scripts/language.js"></script>
     <style>
-        /*#region 适配各种屏幕宽度*/
         @@media (max-width: 1900px) {
             body {
                 width: 1900px;
@@ -58,7 +57,6 @@
                 width: 1340px;
             }
         }
-        /*#endregion*/
 
         /*顶部div样式*/
         #top {
@@ -210,12 +208,6 @@
         td {
             background-color: #E4F2FD;
         }
-
-        .change {
-            color:red;
-            font-weight:bold;                
-        }
-
 
         /*分页控件样式*/
         .fixed-table-pagination {
@@ -380,8 +372,8 @@
                 <div class="swiper-pagination"></div>
 
                 <!-- 如果需要导航按钮 -->
-                <div class="swiper-button-prev"></div>
-                    <div class="swiper-button-next"></div>
+                @*<div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>*@
 
                 <!-- 如果需要滚动条 -->
                 @*<div class="swiper-scrollbar"></div>*@
@@ -469,7 +461,6 @@
     <script src="~/Scripts/swiper.min.js"></script>
     <script src="~/Scripts/index.js"></script>
     <script>
-        //#region 广告轮播
         var mySwiper = new Swiper('.swiper-container', {
             //direction: 'vertical', // 垂直切换选项
             loop: true, // 循环模式选项
@@ -490,21 +481,13 @@
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
             },
-                
+
             // 如果需要滚动条
             scrollbar: {
                 el: '.swiper-scrollbar',
             },
-        })	//鼠标覆盖停止自动切换与隐藏前进后退按钮
-        mySwiper.el.onmouseover = function () {
-            mySwiper.navigation.$nextEl.removeClass('hide');
-            mySwiper.navigation.$prevEl.removeClass('hide');
-        } //鼠标覆盖停止自动切换与隐藏前进后退按钮
-        mySwiper.el.onmouseout = function () {
-            mySwiper.navigation.$nextEl.addClass('hide');
-            mySwiper.navigation.$prevEl.addClass('hide');
-        }
-        //#endregion
+        })
+
 
         //订单列表信息
         $(function () {
@@ -543,13 +526,13 @@
                 data: jsObject,
                 onClickRow: function (row, $element) {
                     showModal();
-                    //点击行时为这个行加change样式，为他的同胞元素去除change样式（siblings查找点击的这个tr的同胞元素）（$element.index()+1是因为0是表头）
-                    $("#tabOrderInfo tr").eq($element.index()+1).addClass("change").siblings().removeClass("change");
                     var orderNo = row.OrderNo;
                     $("#center").load("/Main/SelectOrder?orderID=" + orderNo, function () { hideModal(); });
                 }
 
             })
+
+
         })
 
         //缺料信息
@@ -575,7 +558,6 @@
                 }
             })
         }
-
 
         //资料信息获取
         function downFileInfo(moColde) {
@@ -610,7 +592,6 @@
         function downFiles(serFileName, serFilePath, clicName) {
             post("/Main/downFile", { serFileName: serFileName, serFilePath: serFilePath, clicName: clicName });
 
-            //#region
             //$.ajax({
             //    type: "Get",
             //    url: "/Main/downFile",//
@@ -624,7 +605,6 @@
             //        //}
             //    }
             //})
-            //#endregion
         }
 
         //物流信息
@@ -692,8 +672,7 @@
 	$("#change").click(function() {
 		translate();
 	})
-
-        //#region
+   
         //$(document).ready(function (e) {
         //    var counter = 0;
         //    if (window.history && window.history.pushState) {
@@ -709,7 +688,7 @@
         //    window.history.pushState('forward', null, '#'); //在IE中必须得有这两行
         //    window.history.forward(1);
         //});
-        // #endregion
+
     </script>
 </body>
 

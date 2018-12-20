@@ -95,6 +95,4 @@ E:\生产进度查询\Code\SunpnMesWeb\SunpnMesWeb\bin\zh-Hans\Microsoft.Owin.Se
 E:\生产进度查询\Code\SunpnMesWeb\SunpnMesWeb\obj\Debug\SunpnMesWeb.dll
 E:\生产进度查询\Code\SunpnMesWeb\SunpnMesWeb\obj\Debug\SunpnMesWeb.pdb
 E:\生产进度查询\Code\SunpnMesWeb\SunpnMesWeb\bin\MvcThrottle.dll
-E:\生产进度查询\Code\SunpnMesWeb\SunpnMesWeb\obj\Debug\SunpnMesWeb.csprojAssemblyReference.cache
-E:\生产进度查询\Code\SunpnMesWeb\SunpnMesWeb\obj\Debug\SunpnMesWeb.csproj.CoreCompileInputs.cache
-E:\生产进度查询\Code\SunpnMesWeb\SunpnMesWeb\obj\Debug\SunpnMesWeb.csproj.CopyComplete
+E:\生产进度查询\Code\SunpnMesWeb\SunpnMesWeb\obj\Debug\SunpnMesWeb.csprojResolveAssemblyReference.cache
