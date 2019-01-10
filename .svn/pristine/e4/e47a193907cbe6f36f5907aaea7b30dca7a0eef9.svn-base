@@ -588,7 +588,7 @@
                 data: { moCode: moColde },
                 success: function (data) {
                     var obj = JSON.parse(data);
-                    //debugger;
+                    debugger;
                     if (obj.document.Count == "1") {
                         str += "<tr><td><a  style=\"text-decoration:none; cursor:pointer;\" onclick=\"downFiles('" + obj.document.Data.Row["ServerFileName"] + "','" + obj.document.Data.Row["FilePath"] + "','" + obj.document.Data.Row["FileName"] + "')\">" + obj.document.Data.Row["FileName"] + "</a></td><td  hidden=\"hidden\">" + obj.document.Data.Row["FilePath"] + "</td></tr>";
                         //str += "<tr><td>" + obj.document.Data.Row["FileName"] + "</td><td>" + obj.document.Data.Row["ServerFileName"] + "</td><td>" + obj.document.Data.Row["FilePath"] + "</td></tr>";

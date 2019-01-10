@@ -21,6 +21,7 @@
     <link href="~/Content/swiper.css" rel="stylesheet" />
     <script src="~/Scripts/language.js"></script>
     <style>
+        /*#region 适配各种屏幕宽度*/
         @@media (max-width: 1900px) {
             body {
                 width: 1900px;
@@ -57,6 +58,7 @@
                 width: 1340px;
             }
         }
+        /*#endregion*/
 
         /*顶部div样式*/
         #top {
@@ -467,6 +469,7 @@
     <script src="~/Scripts/swiper.min.js"></script>
     <script src="~/Scripts/index.js"></script>
     <script>
+        //#region 广告轮播
         var mySwiper = new Swiper('.swiper-container', {
             //direction: 'vertical', // 垂直切换选项
             loop: true, // 循环模式选项
@@ -501,8 +504,7 @@
             mySwiper.navigation.$nextEl.addClass('hide');
             mySwiper.navigation.$prevEl.addClass('hide');
         }
-
-
+        //#endregion
 
         //订单列表信息
         $(function () {
@@ -541,14 +543,13 @@
                 data: jsObject,
                 onClickRow: function (row, $element) {
                     showModal();
+                    //点击行时为这个行加change样式，为他的同胞元素去除change样式（siblings查找点击的这个tr的同胞元素）（$element.index()+1是因为0是表头）
                     $("#tabOrderInfo tr").eq($element.index()+1).addClass("change").siblings().removeClass("change");
                     var orderNo = row.OrderNo;
                     $("#center").load("/Main/SelectOrder?orderID=" + orderNo, function () { hideModal(); });
                 }
 
             })
-
-
         })
 
         //缺料信息
@@ -575,6 +576,7 @@
             })
         }
 
+
         //资料信息获取
         function downFileInfo(moColde) {
             $("#MnInfoTab").find("tr th").remove();
@@ -586,7 +588,7 @@
                 data: { moCode: moColde },
                 success: function (data) {
                     var obj = JSON.parse(data);
-                    debugger;
+                    //debugger;
                     if (obj.document.Count == "1") {
                         str += "<tr><td><a  style=\"text-decoration:none; cursor:pointer;\" onclick=\"downFiles('" + obj.document.Data.Row["ServerFileName"] + "','" + obj.document.Data.Row["FilePath"] + "','" + obj.document.Data.Row["FileName"] + "')\">" + obj.document.Data.Row["FileName"] + "</a></td><td  hidden=\"hidden\">" + obj.document.Data.Row["FilePath"] + "</td></tr>";
                         //str += "<tr><td>" + obj.document.Data.Row["FileName"] + "</td><td>" + obj.document.Data.Row["ServerFileName"] + "</td><td>" + obj.document.Data.Row["FilePath"] + "</td></tr>";
@@ -608,6 +610,7 @@
         function downFiles(serFileName, serFilePath, clicName) {
             post("/Main/downFile", { serFileName: serFileName, serFilePath: serFilePath, clicName: clicName });
 
+            //#region
             //$.ajax({
             //    type: "Get",
             //    url: "/Main/downFile",//
@@ -621,6 +624,7 @@
             //        //}
             //    }
             //})
+            //#endregion
         }
 
         //物流信息
@@ -688,7 +692,8 @@
 	$("#change").click(function() {
 		translate();
 	})
-   
+
+        //#region
         //$(document).ready(function (e) {
         //    var counter = 0;
         //    if (window.history && window.history.pushState) {
@@ -704,6 +709,7 @@
         //    window.history.pushState('forward', null, '#'); //在IE中必须得有这两行
         //    window.history.forward(1);
         //});
+        // #endregion
     </script>
 </body>
 
